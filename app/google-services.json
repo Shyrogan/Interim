@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709886252562",
+    "project_id": "interim-b52f7",
+    "storage_bucket": "interim-b52f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709886252562:android:3e75f5a67bed1b227ceacb",
+        "android_client_info": {
+          "package_name": "fr.umontpellier.interim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709886252562-ftm5h597c291l9ijvl7k3tjmcttnv3p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-9o4hywExKFMixdCtb9G3LHOkHbCJ6iM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709886252562-ftm5h597c291l9ijvl7k3tjmcttnv3p2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
