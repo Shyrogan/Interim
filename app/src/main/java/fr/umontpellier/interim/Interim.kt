@@ -15,7 +15,7 @@ class InterimActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            InterimLayout()
+            InterimApp()
         }
     }
 }

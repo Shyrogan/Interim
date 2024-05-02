@@ -66,7 +66,7 @@ fun SignUp() {
             }
         )
         TextButton(onClick = onSubmit) {
-            Text(text = "Sign up")
+            Text(text = "S'inscrire")
         }
     }
 }

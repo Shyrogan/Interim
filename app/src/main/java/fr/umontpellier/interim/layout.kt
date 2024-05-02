@@ -8,13 +8,13 @@ import fr.umontpellier.interim.screen.Home
 import fr.umontpellier.interim.screen.SignUp
 
 sealed class Routes(val route: String) {
-    object Home: Routes("home")
-    object SignIn: Routes("sign-in")
-    object SignUp: Routes("sign-up")
+    data object Home: Routes("home")
+    data object SignIn: Routes("sign-in")
+    data object SignUp: Routes("sign-up")
 }
 
 @Composable
-fun InterimLayout() {
+fun InterimApp() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, Routes.SignUp.route) {
