@@ -1,4 +1,5 @@
 package fr.umontpellier.interim.screen
+
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -29,7 +30,7 @@ fun SignIn() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
-    val navHost = LocalNavHost.current;
+    val navHost = LocalNavHost.current
 
     val onSubmit: () -> Unit = {
         Firebase.auth.signInWithEmailAndPassword(email, password)
@@ -50,54 +51,54 @@ fun SignIn() {
 
 
     Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 4.dp)
-                .fillMaxSize()
-        ) {
-            Text(
-                "Connectez-vous et rejoignez une communauté de chômageur partiels.",
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
-            Spacer(modifier = Modifier.height(48.dp))
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Adresse e-mail") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Mot de passe") },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    val image = if (passwordVisible) Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .fillMaxSize()
+    ) {
+        Text(
+            "Connectez-vous et rejoignez une communauté de chômageur partiels.",
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp
+        )
+        Spacer(modifier = Modifier.height(48.dp))
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Adresse e-mail") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Mot de passe") },
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible) Icons.Filled.Visibility
+                else Icons.Filled.VisibilityOff
 
-                    // Please provide localized description for accessibility services
-                    val description = if (passwordVisible) "Hide password" else "Show password"
+                // Please provide localized description for accessibility services
+                val description = if (passwordVisible) "Hide password" else "Show password"
 
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(48.dp))
-            TextButton(onClick = onSubmit) {
-                Text("Connexion")
-            }
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = image, description)
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(48.dp))
+        TextButton(onClick = onSubmit) {
+            Text("Connexion")
+        }
 
 
-            Text("Pas encore de compte?", textAlign = TextAlign.Center, fontWeight = FontWeight.Light, fontSize = 10.sp)
+        Text("Pas encore de compte?", textAlign = TextAlign.Center, fontWeight = FontWeight.Light, fontSize = 10.sp)
 
-            Spacer(modifier = Modifier.height(8.dp))
-            TextButton(onClick = navToSignUpPage) {
-                Text("S'inscrire")
-            }
+        Spacer(modifier = Modifier.height(8.dp))
+        TextButton(onClick = navToSignUpPage) {
+            Text("S'inscrire ")
         }
     }
+}
