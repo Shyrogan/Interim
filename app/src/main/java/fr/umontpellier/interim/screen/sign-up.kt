@@ -18,13 +18,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import fr.umontpellier.interim.LocalNavHost
+import fr.umontpellier.interim.Routes
 
-@Preview
 @Composable
 fun SignUp() {
     val context = LocalContext.current
+    val navController = LocalNavHost.current
+    if (Firebase.auth.currentUser == null) {
+        navController.navigate(Routes.Home.route)
+        return
+    }
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -38,7 +47,7 @@ fun SignUp() {
                 Toast.makeText(context, "${e.message}.", Toast.LENGTH_SHORT).show()
             }
             .addOnSuccessListener {
-                Toast.makeText(context, "Vous voilà inscrit !", Toast.LENGTH_SHORT).show()
+                navController.navigate(Routes.SignUp.Choice.route)
             }
     }
 

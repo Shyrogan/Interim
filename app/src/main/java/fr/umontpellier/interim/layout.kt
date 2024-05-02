@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.umontpellier.interim.screen.Home
 import fr.umontpellier.interim.screen.SignUp
+import fr.umontpellier.interim.screen.signup.SignUpCandidate
+import fr.umontpellier.interim.screen.signup.SignUpChoice
 
 val LocalNavHost = compositionLocalOf<NavHostController> {
     error("No NavHostController found")
@@ -15,7 +17,11 @@ val LocalNavHost = compositionLocalOf<NavHostController> {
 sealed class Routes(val route: String) {
     data object Home: Routes("home")
     data object SignIn: Routes("sign-in")
-    data object SignUp: Routes("sign-up")
+    data object SignUp: Routes("sign-up") {
+        data object Choice: Routes("sign-up-choice")
+        data object Candidate: Routes("sign-up-candidate")
+        data object Employer: Routes("sign-up-employer")
+    }
 }
 
 @Composable
@@ -32,6 +38,12 @@ fun InterimApp() {
             }
             composable(Routes.SignUp.route) {
                 SignUp()
+            }
+            composable(Routes.SignUp.Choice.route) {
+                SignUpChoice()
+            }
+            composable(Routes.SignUp.Candidate.route) {
+                SignUpCandidate()
             }
         }
     }
