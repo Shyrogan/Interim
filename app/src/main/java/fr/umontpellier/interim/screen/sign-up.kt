@@ -11,10 +11,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -42,11 +45,16 @@ fun SignUp() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp).fillMaxSize()) {
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .fillMaxSize()) {
+        Text("Inscrivez-vous et rejoignez une communauté gargantuesque d'employeurs/candidats.", textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(48.dp))
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Adresse e-mail") }
+            label = { Text("Adresse e-mail") },
+            modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = password,
@@ -63,10 +71,12 @@ fun SignUp() {
                 IconButton(onClick = {passwordVisible = !passwordVisible}){
                     Icon(imageVector  = image, description)
                 }
-            }
+            },
+            modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(48.dp))
         TextButton(onClick = onSubmit) {
-            Text(text = "S'inscrire")
+            Text("S'inscrire")
         }
     }
 }
