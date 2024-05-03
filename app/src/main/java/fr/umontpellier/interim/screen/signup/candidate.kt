@@ -50,7 +50,7 @@ fun SignUpCandidate() {
 
     Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp).fillMaxSize()) {
         Text(
-            "Êtes-vous un employeur ou un candidat ?",
+            "Iscrivez-vous et accédez à nos nombreuses offres",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp
