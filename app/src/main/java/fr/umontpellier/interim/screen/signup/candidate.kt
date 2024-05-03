@@ -27,7 +27,7 @@ fun SignUpCandidate() {
     }
     var first_name by remember { mutableStateOf("") }
     var last_name by remember { mutableStateOf("") }
-    var enterprise by remember { mutableStateOf("") }
+    var nationality by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var additionalInfo by remember { mutableStateOf("") }
 
@@ -40,7 +40,7 @@ fun SignUpCandidate() {
                     "type" to "Candidate",
                     "first_name" to first_name,
                     "last_name" to last_name,
-                    "enterprise" to enterprise,
+                    "nationality" to nationality,
                     "phone" to phone,
                     "additional_info" to additionalInfo
                 )
@@ -78,9 +78,9 @@ fun SignUpCandidate() {
         Spacer(modifier = Modifier.height(12.dp))
 
         TextField(
-            value = enterprise,
-            onValueChange = { enterprise = it },
-            label = { Text("Entreprise") }
+            value = nationality,
+            onValueChange = { nationality = it },
+            label = { Text("Nationalité") }
         )
         Spacer(modifier = Modifier.height(12.dp))
         TextField(
