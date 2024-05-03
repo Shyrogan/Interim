@@ -24,7 +24,7 @@ fun SignUpChoice() {
     }
     val onChoice: (Int) -> () -> Unit = { id ->
         {
-            navController.navigate(if (id == 1) Routes.SignUpCandidate.route else Routes.SignUp.route)
+            navController.navigate(if (id == 0) Routes.SignUpEmployer.route else Routes.SignUpCandidate.route)
         }
     }
 

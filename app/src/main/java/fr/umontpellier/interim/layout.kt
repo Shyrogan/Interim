@@ -21,6 +21,7 @@ import fr.umontpellier.interim.screen.SignIn
 import fr.umontpellier.interim.screen.SignUp
 import fr.umontpellier.interim.screen.signup.SignUpCandidate
 import fr.umontpellier.interim.screen.signup.SignUpChoice
+import fr.umontpellier.interim.screen.signup.SignUpEmployer
 
 
 val LocalNavHost = compositionLocalOf<NavHostController> {
@@ -61,6 +62,8 @@ fun InterimApp() {
                 composable(Routes.SignUp.route) { SignUp() }
                 composable(Routes.SignUpChoice.route) { SignUpChoice() }
                 composable(Routes.SignUpCandidate.route) { SignUpCandidate() }
+                composable(Routes.SignUpEmployer.route) { SignUpEmployer() }
+
             }
         }
     }

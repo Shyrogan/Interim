@@ -1,6 +1,5 @@
 package fr.umontpellier.interim.screen.signup
 
-//import fr.umontpellier.interim.LocalNavHost
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
