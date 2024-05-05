@@ -15,12 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
@@ -47,7 +44,7 @@ fun SignUp() {
                 Toast.makeText(context, "${e.message}.", Toast.LENGTH_SHORT).show()
             }
             .addOnSuccessListener {
-                navController.navigate(Routes.SignUp.Choice.route)
+                navController.navigate(Routes.SignUpChoice.route)
             }
     }
 
@@ -56,8 +53,14 @@ fun SignUp() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 4.dp)
-            .fillMaxSize()) {
-        Text("Inscrivez-vous et rejoignez une communauté gargantuesque d'employeurs/candidats.", textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            .fillMaxSize()
+    ) {
+        Text(
+            "Inscrivez-vous et rejoignez une communauté gargantuesque d'employeurs/candidats.",
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp
+        )
         Spacer(modifier = Modifier.height(48.dp))
         OutlinedTextField(
             value = email,
@@ -77,8 +80,8 @@ fun SignUp() {
                 // Please provide localized description for accessibility services
                 val description = if (passwordVisible) "Hide password" else "Show password"
 
-                IconButton(onClick = {passwordVisible = !passwordVisible}){
-                    Icon(imageVector  = image, description)
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = image, description)
                 }
             },
             modifier = Modifier.fillMaxWidth()

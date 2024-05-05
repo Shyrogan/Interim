@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation("androidx.compose.material:material:1.6.7")
 
     // Firebase
     implementation(platform(libs.firebase.bom))
