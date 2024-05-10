@@ -58,7 +58,7 @@ fun SignIn() {
             .fillMaxSize()
     ) {
         Text(
-            "Connectez-vous et rejoignez une communauté de chômageur partiels.",
+            "Connectez-vous pour explorer un monde d'opportunités professionnelles",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp

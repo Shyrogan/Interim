@@ -56,7 +56,8 @@ fun SignUp() {
             .fillMaxSize()
     ) {
         Text(
-            "Inscrivez-vous et rejoignez une communauté gargantuesque d'employeurs/candidats.",
+            "Rejoignez-nous pour vivre une expérience unique dans le monde du travail !",
+
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp
