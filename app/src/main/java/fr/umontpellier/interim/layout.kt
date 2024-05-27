@@ -22,6 +22,7 @@ import fr.umontpellier.interim.screen.SignUp
 import fr.umontpellier.interim.screen.signup.SignUpCandidate
 import fr.umontpellier.interim.screen.signup.SignUpChoice
 import fr.umontpellier.interim.screen.signup.SignUpEmployer
+import fr.umontpellier.interim.screen.user.Account
 
 
 val LocalNavHost = compositionLocalOf<NavHostController> {
@@ -30,14 +31,14 @@ val LocalNavHost = compositionLocalOf<NavHostController> {
 
 
 sealed class Routes(val route: String, val icon: ImageVector? = null) {
-    object Home : Routes("home", Icons.Filled.Home)
-    object Search : Routes("search", Icons.Filled.Search)
-    object Account : Routes("account", Icons.Filled.AccountCircle)
-    object SignIn : Routes("sign-in")
-    object SignUp : Routes("sign-up")
-    object SignUpChoice : Routes("sign-up-choice")
-    object SignUpCandidate : Routes("sign-up-candidate")
-    object SignUpEmployer : Routes("sign-up-employer")
+    data object Home : Routes("home", Icons.Filled.Home)
+    data object Search : Routes("search", Icons.Filled.Search)
+    data object Account : Routes("account", Icons.Filled.AccountCircle)
+    data object SignIn : Routes("sign-in")
+    data object SignUp : Routes("sign-up")
+    data object SignUpChoice : Routes("sign-up-choice")
+    data object SignUpCandidate : Routes("sign-up-candidate")
+    data object SignUpEmployer : Routes("sign-up-employer")
 }
 
 
@@ -56,7 +57,7 @@ fun InterimApp() {
             ) {
                 composable(Routes.Home.route) { Home() }
                 composable(Routes.Search.route) { SignUpChoice() }//Provisoire pour tester la bar
-                composable(Routes.Account.route) { SignIn() }//Provisoire pour tester la bar
+                composable(Routes.Account.route) { Account() }//Provisoire pour tester la bar
 
                 composable(Routes.SignIn.route) { SignIn() }
                 composable(Routes.SignUp.route) { SignUp() }

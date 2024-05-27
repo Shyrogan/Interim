@@ -15,6 +15,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
+import fr.umontpellier.interim.data.User
 
 @Composable
 fun SignUpCandidate() {
@@ -24,8 +25,8 @@ fun SignUpCandidate() {
         navController.navigate(Routes.SignUpChoice.route)
         return
     }
-    var first_name by remember { mutableStateOf("") }
-    var last_name by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
     var nationality by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var additionalInfo by remember { mutableStateOf("") }
@@ -34,16 +35,13 @@ fun SignUpCandidate() {
         Firebase.firestore
             .collection("user")
             .document(user.uid)
-            .set(
-                hashMapOf(
-                    "type" to "Candidate",
-                    "first_name" to first_name,
-                    "last_name" to last_name,
-                    "nationality" to nationality,
-                    "phone" to phone,
-                    "additional_info" to additionalInfo
-                )
-            )
+            .set(User(
+                firstName,
+                lastName,
+                "fr",
+                phone,
+                "Employer"
+            ))
     }
 
 
@@ -60,15 +58,15 @@ fun SignUpCandidate() {
             modifier = Modifier.fillMaxWidth()
         ) {
             TextField(
-                value = last_name,
-                onValueChange = { last_name = it },
+                value = lastName,
+                onValueChange = { lastName = it },
                 label = { Text("Nom de famille") },
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(12.dp))
             TextField(
-                value = first_name,
-                onValueChange = { first_name = it },
+                value = firstName,
+                onValueChange = { firstName = it },
                 label = { Text("Prénom") },
                 modifier = Modifier.weight(1f)
             )
@@ -79,19 +77,22 @@ fun SignUpCandidate() {
         TextField(
             value = nationality,
             onValueChange = { nationality = it },
-            label = { Text("Nationalité") }
+            label = { Text("Nationalité") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         TextField(
             value = phone,
             onValueChange = { phone = it },
-            label = { Text("Téléphone") }
+            label = { Text("Téléphone") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         TextField(
             value = additionalInfo,
             onValueChange = { additionalInfo = it },
-            label = { Text("Informations supplémentaires") }
+            label = { Text("Informations supplémentaires") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(36.dp))
         Button(onClick = onSubmit) {
