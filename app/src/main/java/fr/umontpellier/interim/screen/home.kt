@@ -19,6 +19,7 @@ import com.google.firebase.firestore.toObject
 import com.google.firestore.v1.Document
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
+import fr.umontpellier.interim.component.offer.OfferList
 import fr.umontpellier.interim.data.Offer
 import fr.umontpellier.interim.data.User
 
@@ -43,7 +44,7 @@ fun Home() {
 
 @Composable
 fun BestOffers() {
-    val closestOffers = remember { mutableStateListOf<Pair<Offer, User>>() }
+    val closestOffers = remember { mutableStateListOf<Offer.WithUser>() }
     val dummy = rememberSaveable { true }
 
     LaunchedEffect(dummy) {
@@ -59,7 +60,7 @@ fun BestOffers() {
                             .addOnSuccessListener { userSnapshot ->
                                 val user = userSnapshot.toObject<User>()
                                 if (user != null) {
-                                    closestOffers.add(offer to user)
+                                    closestOffers.add(Offer.WithUser(offer, user))
                                 }
                             }
                             .addOnFailureListener { exception ->
@@ -75,15 +76,5 @@ fun BestOffers() {
             }
     }
 
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        closestOffers.forEach { (offer, user) ->
-            Card(modifier = Modifier.padding(8.dp)) {
-                Column {
-                    Text(text = offer.name)
-                    Text(text = offer.description)
-                    Text(text = "Par ${user.first_name} ${user.last_name}")
-                }
-            }
-        }
-    }
+    OfferList(offers = closestOffers)
 }

@@ -14,4 +14,8 @@ data class Offer @JvmOverloads constructor(
     val end: Timestamp = Timestamp.now(),
     val owner: DocumentReference = Firebase.firestore.collection("user")
         .document(Firebase.auth.currentUser?.uid ?: ""),
-)
+) {
+
+    data class WithUser(val offer: Offer, val user: User)
+
+}
