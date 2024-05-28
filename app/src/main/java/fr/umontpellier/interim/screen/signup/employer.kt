@@ -1,5 +1,6 @@
 package fr.umontpellier.interim.screen.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,10 +23,12 @@ import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
 import fr.umontpellier.interim.data.User
 
+
 @Composable
 fun SignUpEmployer() {
     val navController = LocalNavHost.current
     val user = Firebase.auth.currentUser
+    val context = LocalContext.current
     if (user == null) {
         navController.navigate(Routes.SignUpChoice.route)
         return
@@ -44,18 +48,27 @@ fun SignUpEmployer() {
             newLink = ""
         }
     }
-
     val onSubmit: () -> Unit = {
         Firebase.firestore
             .collection("user")
             .document(user.uid)
-            .set(User(
-                firstName,
-                lastName,
-                "fr",
-                phone,
-                "Employer"
-            ))
+            .set(
+                User(
+                    firstName,
+                    lastName,
+                    "fr",
+                    phone,
+                    "Employer"
+                )
+            )
+            .addOnSuccessListener {
+                navController.navigate(Routes.Account.route)
+                Toast.makeText(context, "Enregistrement réussi", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Erreur lors de l'enregistrement: ${e.localizedMessage}", Toast.LENGTH_LONG)
+                    .show()
+            }
     }
 
     Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp).fillMaxSize()) {
