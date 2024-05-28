@@ -49,16 +49,21 @@ fun SignUpEmployer() {
         Firebase.firestore
             .collection("user")
             .document(user.uid)
-            .set(User(
-                firstName,
-                lastName,
-                "fr",
-                phone,
-                "Employer"
-            ))
+            .set(
+                User(
+                    firstName,
+                    lastName,
+                    "fr",
+                    phone,
+                    companyName,
+                    publicLinks
+                )
+            )
     }
 
-    Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp).fillMaxSize()) {
+    Column(verticalArrangement = Arrangement.Center, modifier = Modifier
+        .padding(12.dp)
+        .fillMaxSize()) {
         Text(
             "Rejoignez-nous pour recruter les talents qui propulseront votre entreprise !",
             textAlign = TextAlign.Center,
@@ -118,7 +123,9 @@ fun SignUpEmployer() {
                 value = newLink,
                 onValueChange = { newLink = it },
                 label = { Text("Ajouter un lien public") },
-                modifier = Modifier.weight(1f).fillMaxWidth()
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
             )
             IconButton(onClick = addLink) {
                 Icon(Icons.Filled.Add, contentDescription = "Ajouter un lien")
