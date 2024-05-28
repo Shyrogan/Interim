@@ -19,6 +19,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
+import fr.umontpellier.interim.data.User
 
 @Composable
 fun SignUpEmployer() {
@@ -34,7 +35,7 @@ fun SignUpEmployer() {
     var companyName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    var publicLinks by remember { mutableStateOf(mutableListOf<String>()) }
+    val publicLinks by remember { mutableStateOf(mutableListOf<String>()) }
     var newLink by remember { mutableStateOf("") }
 
     val addLink = {
@@ -48,17 +49,13 @@ fun SignUpEmployer() {
         Firebase.firestore
             .collection("user")
             .document(user.uid)
-            .set(
-                hashMapOf(
-                    "type" to "Employer",
-                    "first_name" to firstName,
-                    "last_name" to lastName,
-                    "company_name" to companyName,
-                    "phone" to phone,
-                    "address" to address,
-                    "public_links" to publicLinks
-                )
-            )
+            .set(User(
+                firstName,
+                lastName,
+                "fr",
+                phone,
+                "Employer"
+            ))
     }
 
     Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp).fillMaxSize()) {
@@ -92,19 +89,22 @@ fun SignUpEmployer() {
         TextField(
             value = companyName,
             onValueChange = { companyName = it },
-            label = { Text("Nom de l'entreprise") }
+            label = { Text("Nom de l'entreprise") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         TextField(
             value = phone,
             onValueChange = { phone = it },
-            label = { Text("Numéro de téléphone") }
+            label = { Text("Numéro de téléphone") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         TextField(
             value = address,
             onValueChange = { address = it },
-            label = { Text("Adresse") }
+            label = { Text("Adresse") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text("Liens publics:")
@@ -118,7 +118,7 @@ fun SignUpEmployer() {
                 value = newLink,
                 onValueChange = { newLink = it },
                 label = { Text("Ajouter un lien public") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).fillMaxWidth()
             )
             IconButton(onClick = addLink) {
                 Icon(Icons.Filled.Add, contentDescription = "Ajouter un lien")
