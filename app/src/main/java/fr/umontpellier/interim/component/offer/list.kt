@@ -2,6 +2,7 @@ package fr.umontpellier.interim.component.offer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,13 +16,15 @@ import coil.compose.AsyncImage
 import fr.umontpellier.interim.data.Offer
 
 @Composable
-fun OfferList(offers: List<Offer.WithUser>) {
+fun OfferList(offers: List<Offer.WithUser>, onOfferClick: (String) -> Unit) {
     offers.forEach { (offer, user) ->
         Box(
             modifier = Modifier
                 .padding(16.dp)
                 .border(2.dp, Color.Gray)
                 .background(Color.LightGray.copy(alpha = 0.4F))
+                .clickable { offer.id?.let { onOfferClick(it) } }
+
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -40,7 +43,7 @@ fun OfferList(offers: List<Offer.WithUser>) {
                     Text(text = offer.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Text(text = offer.description, fontWeight = FontWeight.Medium, color = Color.DarkGray)
                     Text(
-                        text = "Proposé par ${user.first_name} ${user.last_name}",
+                        text = "Proposé par ${user.first_name} ${user.last_name} ",
                         fontWeight = FontWeight.Medium,
                         fontSize = 12.sp,
                         color = Color.Gray

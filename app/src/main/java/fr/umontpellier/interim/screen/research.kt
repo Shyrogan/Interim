@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.component.offer.OfferList
 import fr.umontpellier.interim.data.Offer
 import fr.umontpellier.interim.data.User
@@ -24,6 +25,7 @@ import fr.umontpellier.interim.data.User
 @Preview
 @Composable
 fun Research() {
+    val navController = LocalNavHost.current
     val offers = remember {
         mutableStateListOf<Offer.WithUser>()
     }
@@ -51,6 +53,7 @@ fun Research() {
                                 val user = userSnapshot.toObject<User>()
                                 if (user != null && !offers.contains(Offer.WithUser(offer, user))) {
                                     offers.add(Offer.WithUser(offer, user))
+
                                 }
                             }
                             .addOnFailureListener { exception ->
@@ -77,6 +80,7 @@ fun Research() {
             fontSize = 21.sp,
             modifier = Modifier.padding(horizontal = 4.dp)
         )
-        OfferList(offers)
-    }
+        OfferList(offers) { offerId ->
+            navController.navigate("offer/$offerId")
+        }    }
 }
