@@ -54,15 +54,18 @@ fun ManageOffer() {
             Text("Mes offres:", style = MaterialTheme.typography.h6, modifier = Modifier.padding(16.dp))
         }
         items(offers) { offer ->
-            OfferItem(offer, onEdit = {
-                navController.navigate("edit_offer/${offer.id}")
-            }, onDelete = {
-                if (offer.id != null) {
-                    deleteOffer(offer.id, context)
-                }
-            }, onViewResponses = {
-                navController.navigate("viewResponses/${offer.id}")
-            })
+            OfferItem(offer,
+                onEdit = {
+                    navController.navigate("edit_offer/${offer.id}")
+                }, onDelete = {
+                    if (offer.id != null) {
+                        deleteOffer(offer.id, context)
+                    }
+                }, onViewResponses = {
+                    /* todo implementer page liste des candidats
+                    navController.navigate("viewResponses/${offer.id}")
+                    */
+                })
         }
     }
 }
