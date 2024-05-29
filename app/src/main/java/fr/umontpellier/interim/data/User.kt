@@ -5,5 +5,14 @@ data class User @JvmOverloads constructor(
     val last_name: String = "",
     val nationality: String = "",
     val phone: String = "",
-    val type: String = "",
-)
+    val company: String = "",
+    val files: List<String> = mutableListOf()
+) {
+
+    val isCandidate: Boolean
+        get() = company.isEmpty()
+
+    val isEmployer: Boolean
+        get() = !isCandidate
+
+}
