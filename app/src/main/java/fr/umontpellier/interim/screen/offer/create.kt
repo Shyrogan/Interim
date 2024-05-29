@@ -1,8 +1,11 @@
 package fr.umontpellier.interim.screen.offer
 
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -10,12 +13,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
+import fr.umontpellier.interim.component.ImagePicker
+import fr.umontpellier.interim.component.uploadImageToFirebaseStorage
 import fr.umontpellier.interim.data.Offer
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,10 +37,14 @@ fun CreateOffer() {
     var profilesNeeded by remember { mutableStateOf(mutableListOf<String>()) }
     var remuneration by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var logo by remember { mutableStateOf("") }
     var start by remember { mutableStateOf(Timestamp.now()) }
     var end by remember { mutableStateOf(Timestamp.now()) }
     var newProfile by remember { mutableStateOf("") }
+
+    var logoUri by remember { mutableStateOf<Uri?>(null) }
+    var logoUrl by remember { mutableStateOf("") }
+
+    val scrollState = rememberScrollState()
 
 
     val addProfile = {
@@ -47,7 +57,7 @@ fun CreateOffer() {
     val onSubmit: () -> Unit = {
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
-            val userRef = Firebase.firestore.collection("users").document(currentUser.uid)
+            val userRef = Firebase.firestore.collection("user").document(currentUser.uid)
             Firebase.firestore
                 .collection("offer")
                 .add(
@@ -58,7 +68,7 @@ fun CreateOffer() {
                         profilesNeeded,
                         remuneration,
                         description,
-                        logo,
+                        logoUrl,
                         start,
                         end,
                         userRef
@@ -78,7 +88,34 @@ fun CreateOffer() {
         }
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier.padding(16.dp)
+            .verticalScroll(scrollState)
+    ) {
+        ImagePicker { uri ->
+            logoUri = uri
+            uploadImageToFirebaseStorage(uri,
+                onSuccess = { url ->
+                    logoUrl = url
+                    Toast.makeText(context, "Image téléchargée avec succès", Toast.LENGTH_SHORT).show()
+                },
+                onFailure = { exception ->
+                    Toast.makeText(
+                        context,
+                        "Erreur de téléchargement: ${exception.localizedMessage}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            )
+        }
+        if (logoUrl.isNotEmpty()) {
+            AsyncImage(
+                model = logoUrl,
+                contentDescription = "Logo téléchargé",
+                modifier = Modifier.size(100.dp),
+            )
+        }
+
         TextField(
             value = name,
             onValueChange = { name = it },
@@ -124,7 +161,7 @@ fun CreateOffer() {
 
         Spacer(modifier = Modifier.height(48.dp))
         androidx.compose.material3.TextButton(onClick = onSubmit) {
-            androidx.compose.material3.Text("Creer")
+            androidx.compose.material3.Text("Creer l'offre")
         }
     }
 }
