@@ -11,8 +11,8 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
-import fr.umontpellier.interim.component.CandidateProfileComponent
-import fr.umontpellier.interim.component.EmployerProfileComponent
+import fr.umontpellier.interim.component.EditCandidateComponent
+import fr.umontpellier.interim.component.EmployerProfileScreen
 import fr.umontpellier.interim.data.User
 
 @Composable
@@ -37,11 +37,11 @@ fun Account() {
         Text(text = "Loading...")
         return
     } else if (data!!.isEmployer) {
-        EmployerProfileComponent(data) { updatedUser ->
+        EmployerProfileScreen(data) { updatedUser ->
             updateUserInFirebase(updatedUser, context)
         }
     } else {
-        CandidateProfileComponent(data) { updatedUser ->
+        EditCandidateComponent(data) { updatedUser ->
             updateUserInFirebase(updatedUser, context)
         }
     }
