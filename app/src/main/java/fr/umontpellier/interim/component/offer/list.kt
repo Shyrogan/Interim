@@ -1,10 +1,8 @@
 package fr.umontpellier.interim.component.offer
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,25 +16,35 @@ import fr.umontpellier.interim.data.Offer
 
 @Composable
 fun OfferList(offers: List<Offer.WithUser>) {
-    Column(modifier = Modifier.padding(horizontal = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(text = "Nos offres qui vous correspondent:", fontWeight = FontWeight.Bold, fontSize = 21.sp, modifier = Modifier.padding(horizontal = 4.dp))
-        offers.forEach { (offer, user) ->
-            Box(modifier = Modifier
+    offers.forEach { (offer, user) ->
+        Box(
+            modifier = Modifier
                 .padding(16.dp)
                 .border(2.dp, Color.Gray)
-                .background(Color.LightGray.copy(alpha = 0.4F))) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(8.dp)) {
-                    // TODO: Add placeholder
-                    AsyncImage(model = offer.logo, contentDescription = "Logo de ${offer.name}", modifier = Modifier
+                .background(Color.LightGray.copy(alpha = 0.4F))
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(8.dp)
+            ) {
+                // TODO: Add placeholder
+                AsyncImage(
+                    model = offer.logo, contentDescription = "Logo de ${offer.name}", modifier = Modifier
                         .width(64.dp)
                         .height(64.dp)
-                        .padding(8.dp))
+                        .padding(8.dp)
+                )
 
-                    Column {
-                        Text(text = offer.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                        Text(text = offer.description, fontWeight = FontWeight.Medium, color = Color.DarkGray)
-                        Text(text = "Proposé par ${user.first_name} ${user.last_name}", fontWeight = FontWeight.Medium, fontSize = 12.sp, color = Color.Gray)
-                    }
+                Column {
+                    Text(text = offer.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(text = offer.description, fontWeight = FontWeight.Medium, color = Color.DarkGray)
+                    Text(
+                        text = "Proposé par ${user.first_name} ${user.last_name}",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
                 }
             }
         }

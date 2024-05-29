@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.umontpellier.interim.component.BottomNavigationBar
 import fr.umontpellier.interim.screen.Home
+import fr.umontpellier.interim.screen.Research
 import fr.umontpellier.interim.screen.SignIn
 import fr.umontpellier.interim.screen.SignUp
 import fr.umontpellier.interim.screen.signup.SignUpCandidate
@@ -56,7 +57,7 @@ fun InterimApp() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(Routes.Home.route) { Home() }
-                composable(Routes.Search.route) { SignUpChoice() }//Provisoire pour tester la bar
+                composable(Routes.Search.route) { Research() }//Provisoire pour tester la bar
                 composable(Routes.Account.route) { Account() }//Provisoire pour tester la bar
 
                 composable(Routes.SignIn.route) { SignIn() }
