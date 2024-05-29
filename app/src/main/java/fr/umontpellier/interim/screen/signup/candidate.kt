@@ -35,17 +35,22 @@ fun SignUpCandidate() {
         Firebase.firestore
             .collection("user")
             .document(user.uid)
-            .set(User(
-                firstName,
-                lastName,
-                "fr",
-                phone,
-                "Employer"
-            ))
+            .set(
+                User(
+                    firstName,
+                    lastName,
+                    "fr",
+                    phone,
+                )
+            )
     }
 
 
-    Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp).fillMaxSize()) {
+    Column(
+        verticalArrangement = Arrangement.Center, modifier = Modifier
+            .padding(12.dp)
+            .fillMaxSize()
+    ) {
         Text(
             "Inscrivez-vous dès maintenant et trouvez l'emploi de vos rêves !",
 
