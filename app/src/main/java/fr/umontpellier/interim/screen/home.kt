@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
@@ -39,12 +40,17 @@ fun Home() {
         }) {
             Text("Se connecter")
         }
-        BestOffers()
+        TextButton(onClick = {
+            navHost.navigate(Routes.CreateOffer.route)
+        }) {
+            Text("Creer une offre")
+        }
+        BestOffers(navHost)
     }
 }
 
 @Composable
-fun BestOffers() {
+fun BestOffers(navHost: NavHostController) {
     val closestOffers = remember { mutableStateListOf<Offer.WithUser>() }
     val dummy = rememberSaveable { true }
 
@@ -84,6 +90,8 @@ fun BestOffers() {
             fontSize = 21.sp,
             modifier = Modifier.padding(horizontal = 4.dp)
         )
-        OfferList(offers = closestOffers)
+        OfferList(offers = closestOffers) { offerId ->
+            navHost.navigate("offer/$offerId")
+        }
     }
 }
