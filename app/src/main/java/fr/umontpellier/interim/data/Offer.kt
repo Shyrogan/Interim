@@ -23,9 +23,5 @@ data class Offer @JvmOverloads constructor(
 ) {
 
     data class WithUser(val offer: Offer, val user: User)
-    data class WithId(val offer: Offer, val id: String)
-    data class WithUserAndId(
-        val offer: Offer, val user: User, val id: String
-    )
 
 }
