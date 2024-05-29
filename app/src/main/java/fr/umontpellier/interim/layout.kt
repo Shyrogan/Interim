@@ -24,6 +24,7 @@ import fr.umontpellier.interim.screen.Research
 import fr.umontpellier.interim.screen.SignIn
 import fr.umontpellier.interim.screen.SignUp
 import fr.umontpellier.interim.screen.offer.CreateOffer
+import fr.umontpellier.interim.screen.offer.EditOfferPage
 import fr.umontpellier.interim.screen.offer.OfferPage
 import fr.umontpellier.interim.screen.signup.SignUpCandidate
 import fr.umontpellier.interim.screen.signup.SignUpChoice
@@ -46,7 +47,9 @@ sealed class Routes(val route: String, val icon: ImageVector? = null) {
     data object SignUpCandidate : Routes("sign-up-candidate")
     data object SignUpEmployer : Routes("sign-up-employer")
     data object CreateOffer : Routes("create_offer")
+    data object EditOffer : Routes("edit_offer/{offerId}")
     object OfferPage : Routes("offer/{offerId}")
+
 
 }
 
@@ -74,8 +77,18 @@ fun InterimApp() {
                 composable(Routes.SignUpCandidate.route) { SignUpCandidate() }
                 composable(Routes.SignUpEmployer.route) { SignUpEmployer() }
 
-
                 composable(Routes.CreateOffer.route) { CreateOffer() }
+                composable(
+                    route = Routes.EditOffer.route,
+                    arguments = listOf(navArgument("offerId") { type = NavType.StringType })
+                ) { navEntry ->
+                    val offerId = navEntry.arguments?.getString("offerId")
+                    if (offerId != null) {
+                        EditOfferPage(offerId)
+                    } else {
+                        Text("Erreur : ID de l'offre non trouvé.")
+                    }
+                }
                 composable(
                     route = Routes.OfferPage.route,
                     arguments = listOf(navArgument("offerId") { type = NavType.StringType })
