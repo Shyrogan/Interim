@@ -10,7 +10,6 @@ import fr.umontpellier.interim.data.Offer
 
 @Composable
 fun OfferPage(offerId: String) {
-    val navHost = LocalNavHost.current
     var offerData by remember { mutableStateOf<Offer?>(null) }
 
     Firebase.firestore

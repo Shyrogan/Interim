@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
@@ -11,10 +12,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
 
+
 @Composable
-fun EmployerProfileComponent(user: User?, onSave: (User) -> Unit) {
+fun EmployerProfileScreen(user: User?, onSave: (User) -> Unit) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Card(modifier = Modifier.weight(2f)) {
+            EditEmployeeComponent(user, onSave)
+        }
+        Card(modifier = Modifier.weight(1f)) {
+            ManageOffer()
+        }
+    }
+}
+
+@Composable
+fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
     if (user == null) {
         Text("Aucune donnée disponible")
         return
@@ -67,7 +82,7 @@ fun EmployerProfileComponent(user: User?, onSave: (User) -> Unit) {
 }
 
 @Composable
-fun CandidateProfileComponent(user: User?, onSave: (User) -> Unit) {
+fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
     if (user == null) {
         Text("Aucune donnée disponible")
         return

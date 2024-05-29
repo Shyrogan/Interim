@@ -43,7 +43,7 @@ fun OfferList(offers: List<Offer.WithUser>, onOfferClick: (String) -> Unit) {
                     Text(text = offer.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Text(text = offer.description, fontWeight = FontWeight.Medium, color = Color.DarkGray)
                     Text(
-                        text = "Proposé par ${user.first_name} ${user.last_name} ",
+                        text = "Proposé par ${user.first_name} ${user.last_name}, ${user.company_position} chez ${user.company}",
                         fontWeight = FontWeight.Medium,
                         fontSize = 12.sp,
                         color = Color.Gray
