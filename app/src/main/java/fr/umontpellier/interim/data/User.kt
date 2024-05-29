@@ -6,6 +6,8 @@ data class User @JvmOverloads constructor(
     val nationality: String = "",
     val phone: String = "",
     val company: String = "",
+    val company_position: String = "",
+    val address: String = "",
     val files: List<String> = mutableListOf()
 ) {
 
