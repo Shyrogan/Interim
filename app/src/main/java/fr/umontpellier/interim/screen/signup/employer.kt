@@ -51,6 +51,7 @@ fun SignUpEmployer() {
             .document(user.uid)
             .set(
                 User(
+                    null,
                     firstName,
                     lastName,
                     "fr",
@@ -61,9 +62,11 @@ fun SignUpEmployer() {
             )
     }
 
-    Column(verticalArrangement = Arrangement.Center, modifier = Modifier
-        .padding(12.dp)
-        .fillMaxSize()) {
+    Column(
+        verticalArrangement = Arrangement.Center, modifier = Modifier
+            .padding(12.dp)
+            .fillMaxSize()
+    ) {
         Text(
             "Rejoignez-nous pour recruter les talents qui propulseront votre entreprise !",
             textAlign = TextAlign.Center,

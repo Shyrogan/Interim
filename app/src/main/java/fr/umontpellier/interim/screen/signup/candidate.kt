@@ -37,6 +37,7 @@ fun SignUpCandidate() {
             .document(user.uid)
             .set(
                 User(
+                    null,
                     firstName,
                     lastName,
                     "fr",

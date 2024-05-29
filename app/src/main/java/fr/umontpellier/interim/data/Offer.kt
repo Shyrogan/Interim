@@ -3,11 +3,17 @@ package fr.umontpellier.interim.data
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.firestore
 
 data class Offer @JvmOverloads constructor(
+    @DocumentId
+    val id: String? = null,
     val name: String = "",
+    val jobTitle: String = "",
+    val profilesNeeded: List<String> = emptyList(),
+    val remuneration: String = "",
     val description: String = "",
     val logo: String = "",
     val start: Timestamp = Timestamp.now(),
@@ -17,5 +23,9 @@ data class Offer @JvmOverloads constructor(
 ) {
 
     data class WithUser(val offer: Offer, val user: User)
+    data class WithId(val offer: Offer, val id: String)
+    data class WithUserAndId(
+        val offer: Offer, val user: User, val id: String
+    )
 
 }
