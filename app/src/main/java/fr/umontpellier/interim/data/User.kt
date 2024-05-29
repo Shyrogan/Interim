@@ -1,6 +1,10 @@
 package fr.umontpellier.interim.data
 
+import com.google.firebase.firestore.DocumentId
+
 data class User @JvmOverloads constructor(
+    @DocumentId
+    val id: String? = null,
     val first_name: String = "",
     val last_name: String = "",
     val nationality: String = "",

@@ -55,6 +55,7 @@ fun SignUpEmployer() {
             .document(user.uid)
             .set(
                 User(
+                    null,
                     firstName,
                     lastName,
                     "fr",
