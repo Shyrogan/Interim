@@ -1,7 +1,6 @@
 package fr.umontpellier.interim.screen.user
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -27,8 +26,7 @@ fun Account() {
     }
 
     var data by remember { mutableStateOf<User?>(null) }
-    if (Firebase.auth.currentUser != null && Firebase.auth.currentUser?.uid != null) {
-        Log.i("Test", "${Firebase.auth.currentUser}")
+    if (Firebase.auth.currentUser != null) {
         Firebase.firestore
             .collection("user")
             .document(Firebase.auth.currentUser!!.uid)
