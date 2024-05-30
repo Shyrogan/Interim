@@ -62,9 +62,7 @@ fun ManageOffer() {
                         deleteOffer(offer.id, context)
                     }
                 }, onViewResponses = {
-                    /* todo implementer page liste des candidats
-                    navController.navigate("viewResponses/${offer.id}")
-                    */
+                    navController.navigate("manage_app/${offer.id}")
                 })
         }
     }

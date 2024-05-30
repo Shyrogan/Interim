@@ -30,6 +30,7 @@ import fr.umontpellier.interim.screen.signup.SignUpCandidate
 import fr.umontpellier.interim.screen.signup.SignUpChoice
 import fr.umontpellier.interim.screen.signup.SignUpEmployer
 import fr.umontpellier.interim.screen.user.Account
+import fr.umontpellier.interim.screen.user.employer.ManageApplicationPage
 
 
 val LocalNavHost = compositionLocalOf<NavHostController> {
@@ -49,6 +50,7 @@ sealed class Routes(val route: String, val icon: ImageVector? = null) {
     data object CreateOffer : Routes("create_offer")
     data object EditOffer : Routes("edit_offer/{offerId}")
     object OfferPage : Routes("offer/{offerId}")
+    data object ManageApplications : Routes("manage_app/{offerId}")
 
 
 }
@@ -100,6 +102,18 @@ fun InterimApp() {
                         Text("Erreur : ID de l'offre non trouvé.")
                     }
                 }
+                composable(
+                    route = Routes.ManageApplications.route,
+                    arguments = listOf(navArgument("offerId") { type = NavType.StringType })
+                ) { navEntry ->
+                    val offerId = navEntry.arguments?.getString("offerId")
+                    if (offerId != null) {
+                        ManageApplicationPage(offerId)
+                    } else {
+                        Text("Erreur : ID de l'offre non trouvé.")
+                    }
+                }
+
             }
         }
     }
