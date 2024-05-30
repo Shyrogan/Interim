@@ -2,7 +2,7 @@ package fr.umontpellier.interim.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,18 +45,18 @@ fun Research() {
                 offerSnapshot.documents
                     .mapNotNull { it.toObject<Offer>() }
                     .forEach { offer ->
-                        offer.owner.get()
-                            .addOnSuccessListener { userSnapshot ->
+                        offer.owner?.get()
+                            ?.addOnSuccessListener { userSnapshot ->
                                 val user = userSnapshot.toObject<User>()
                                 if (user != null && !offers.contains(Offer.WithUser(offer, user))) {
                                     offers.add(Offer.WithUser(offer, user))
 
                                 }
                             }
-                            .addOnFailureListener { exception ->
+                            ?.addOnFailureListener { exception ->
                                 Log.e("Research", "Error loading user data", exception)
                             }
-                            .addOnCanceledListener {
+                            ?.addOnCanceledListener {
                                 Log.e("Research", "User data load canceled")
                             }
                     }
@@ -69,7 +69,10 @@ fun Research() {
     LaunchedEffect(dummy) {
         onResearchChange("")
     }
-    Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(
+        modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
         OutlinedTextField(
             value,
             onValueChange = onResearchChange,

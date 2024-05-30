@@ -58,7 +58,7 @@ fun Home() {
                     .document(Firebase.auth.currentUser!!.uid)
                     .get()
                     .addOnSuccessListener {
-                        isEmployer =  it.toObject<User>()?.isEmployer ?: false
+                        isEmployer = it.toObject<User>()?.isEmployer ?: false
                     }
                 if (isEmployer) {
                     TextButton(onClick = {
@@ -88,18 +88,18 @@ fun BestOffers(navHost: NavHostController) {
                 offerSnapshot.documents
                     .mapNotNull { it.toObject<Offer>() }
                     .forEach { offer ->
-                        offer.owner.get()
-                            .addOnSuccessListener { userSnapshot ->
+                        offer.owner?.get()
+                            ?.addOnSuccessListener { userSnapshot ->
                                 val user = userSnapshot.toObject<User>()
                                 if (user != null) {
                                     closestOffers.add(Offer.WithUser(offer, user))
                                 }
                             }
-                            .addOnFailureListener { exception ->
-                                Log.e("BestOffers", "Error loading user data", exception)
+                            ?.addOnFailureListener { exception ->
+                                Log.e("offers", "Error loading user data", exception)
                             }
-                            .addOnCanceledListener {
-                                Log.e("BestOffers", "User data load canceled")
+                            ?.addOnCanceledListener {
+                                Log.e("offers", "User data load canceled")
                             }
                     }
             }

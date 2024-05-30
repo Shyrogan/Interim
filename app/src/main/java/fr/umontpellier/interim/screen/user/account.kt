@@ -1,6 +1,7 @@
 package fr.umontpellier.interim.screen.user
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -20,20 +21,22 @@ fun Account() {
     val navHost = LocalNavHost.current
     val context = LocalContext.current
 
-
     if (Firebase.auth.currentUser == null) {
         navHost.navigate(Routes.SignIn.route)
         return
     }
 
     var data by remember { mutableStateOf<User?>(null) }
-    Firebase.firestore
-        .collection("user")
-        .document(Firebase.auth.currentUser!!.uid)
-        .get()
-        .addOnSuccessListener {
-            data = it.toObject<User>()
-        }
+    if (Firebase.auth.currentUser != null && Firebase.auth.currentUser?.uid != null) {
+        Log.i("Test", "${Firebase.auth.currentUser}")
+        Firebase.firestore
+            .collection("user")
+            .document(Firebase.auth.currentUser!!.uid)
+            .get()
+            .addOnSuccessListener {
+                data = it.toObject<User>()
+            }
+    }
 
     if (data == null) {
         Text(text = "Loading...")
