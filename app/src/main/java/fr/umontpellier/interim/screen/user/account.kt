@@ -23,26 +23,27 @@ fun Account() {
 
     if (Firebase.auth.currentUser == null) {
         navHost.navigate(Routes.SignIn.route)
-    }
-    var data by remember { mutableStateOf<User?>(null) }
-    Firebase.firestore
-        .collection("user")
-        .document(Firebase.auth.currentUser!!.uid)
-        .get()
-        .addOnSuccessListener {
-            data = it.toObject<User>()
-        }
-
-    if (data == null) {
-        Text(text = "Loading...")
-        return
-    } else if (data!!.isEmployer) {
-        EmployerProfileScreen(data) { updatedUser ->
-            updateUserInFirebase(updatedUser, context)
-        }
     } else {
-        EditCandidateComponent(data) { updatedUser ->
-            updateUserInFirebase(updatedUser, context)
+        var data by remember { mutableStateOf<User?>(null) }
+        Firebase.firestore
+            .collection("user")
+            .document(Firebase.auth.currentUser!!.uid)
+            .get()
+            .addOnSuccessListener {
+                data = it.toObject<User>()
+            }
+
+        if (data == null) {
+            Text(text = "Loading...")
+            return
+        } else if (data!!.isEmployer) {
+            EmployerProfileScreen(data) { updatedUser ->
+                updateUserInFirebase(updatedUser, context)
+            }
+        } else {
+            EditCandidateComponent(data) { updatedUser ->
+                updateUserInFirebase(updatedUser, context)
+            }
         }
     }
 }
