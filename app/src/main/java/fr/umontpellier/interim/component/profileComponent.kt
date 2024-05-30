@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import fr.umontpellier.interim.LocalNavHost
+import fr.umontpellier.interim.Routes
 import fr.umontpellier.interim.component.candidate.ShowCV
 import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
@@ -36,6 +38,7 @@ fun EmployerProfileScreen(user: User?, onSave: (User) -> Unit) {
 
 @Composable
 fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
+    var navHost = LocalNavHost.current
     if (user == null) {
         Text("Aucune donnée disponible")
         return
@@ -85,7 +88,10 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
         }
 
         Button(
-            onClick = { Firebase.auth.signOut() },
+            onClick = {
+                Firebase.auth.signOut()
+                navHost.navigate(Routes.Home.route)
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
         ) {
             androidx.compose.material3.Text(text = "Se déconnecter")
@@ -97,6 +103,7 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
 @Composable
 fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
     var context = LocalContext.current
+    var navHost = LocalNavHost.current
     if (user == null) {
         Text("Aucune donnée disponible")
         return
@@ -186,6 +193,15 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
             )
         }) {
             Text("Sauvegarder")
+        }
+        Button(
+            onClick = {
+                Firebase.auth.signOut()
+                navHost.navigate(Routes.Home.route)
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+        ) {
+            androidx.compose.material3.Text(text = "Se déconnecter")
         }
     }
 
