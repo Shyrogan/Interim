@@ -11,7 +11,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
-import fr.umontpellier.interim.component.EditCandidateComponent
+import fr.umontpellier.interim.component.CandidateProfileScreen
 import fr.umontpellier.interim.component.EmployerProfileScreen
 import fr.umontpellier.interim.data.User
 
@@ -44,7 +44,7 @@ fun Account() {
             updateUserInFirebase(updatedUser, context)
         }
     } else {
-        EditCandidateComponent(data) { updatedUser ->
+        CandidateProfileScreen(data) { updatedUser ->
             updateUserInFirebase(updatedUser, context)
         }
     }

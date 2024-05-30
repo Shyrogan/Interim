@@ -23,6 +23,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
+import fr.umontpellier.interim.component.candidate.ShowApplications
 import fr.umontpellier.interim.component.candidate.ShowCV
 import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
@@ -31,8 +32,41 @@ import fr.umontpellier.interim.data.User
 @Composable
 fun EmployerProfileScreen(user: User?, onSave: (User) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
-        EditEmployeeComponent(user, onSave)
-        ManageOffer()
+
+        Box(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxWidth()
+        ) {
+            EditEmployeeComponent(user, onSave)
+        }
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
+            ManageOffer()
+        }
+    }
+}
+
+@Composable
+fun CandidateProfileScreen(user: User?, onSave: (User) -> Unit) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxWidth()
+        ) {
+            EditCandidateComponent(user, onSave)
+        }
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
+            ShowApplications()
+        }
     }
 }
 
