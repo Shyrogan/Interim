@@ -28,11 +28,12 @@ fun SignUpEmployer() {
     val navController = LocalNavHost.current
     val context = LocalContext.current
     val user = Firebase.auth.currentUser
-    if (user == null) {
+    val email = user?.email
+
+    if (user == null || email == null) {
         navController.navigate(Routes.SignUpChoice.route)
         return
     }
-
     var lastName by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
     var companyName by remember { mutableStateOf("") }
@@ -56,6 +57,7 @@ fun SignUpEmployer() {
             .set(
                 User(
                     null,
+                    email,
                     firstName,
                     lastName,
                     "fr",

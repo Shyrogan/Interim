@@ -24,10 +24,13 @@ fun SignUpCandidate() {
     val navController = LocalNavHost.current
     val context = LocalContext.current
     val user = Firebase.auth.currentUser
-    if (user == null) {
+    val email = user?.email
+
+    if (user == null || email == null || email == "") {
         navController.navigate(Routes.SignUpChoice.route)
         return
     }
+
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var nationality by remember { mutableStateOf("") }
@@ -41,6 +44,7 @@ fun SignUpCandidate() {
             .set(
                 User(
                     null,
+                    email,
                     firstName,
                     lastName,
                     nationality,
