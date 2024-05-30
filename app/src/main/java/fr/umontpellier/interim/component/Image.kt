@@ -34,7 +34,7 @@ fun ImagePicker(onImagePicked: (Uri) -> Unit) {
 }
 
 
-fun uploadImageToFirebaseStorage(imageUri: Uri, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+fun uploadFileToFirebaseStorage(imageUri: Uri, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
     val storageRef = Firebase.storage.reference
     val imageRef = storageRef.child("${Firebase.auth.currentUser?.uid}/${UUID.randomUUID()}")
 
@@ -56,7 +56,7 @@ fun UpdateImagePicker(currentUrl: String, onImageUpdated: (String) -> Unit) {
     var uri by remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            uploadImageToFirebaseStorage(it,
+            uploadFileToFirebaseStorage(it,
                 onSuccess = onImageUpdated,
                 onFailure = { exception ->
                     Toast.makeText(

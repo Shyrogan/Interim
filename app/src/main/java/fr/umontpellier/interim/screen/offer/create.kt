@@ -21,7 +21,7 @@ import com.google.firebase.firestore.firestore
 import fr.umontpellier.interim.LocalNavHost
 import fr.umontpellier.interim.Routes
 import fr.umontpellier.interim.component.ImagePicker
-import fr.umontpellier.interim.component.uploadImageToFirebaseStorage
+import fr.umontpellier.interim.component.uploadFileToFirebaseStorage
 import fr.umontpellier.interim.data.Offer
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,7 +94,7 @@ fun CreateOffer() {
     ) {
         ImagePicker { uri ->
             logoUri = uri
-            uploadImageToFirebaseStorage(uri,
+            uploadFileToFirebaseStorage(uri,
                 onSuccess = { url ->
                     logoUrl = url
                     Toast.makeText(context, "Image téléchargée avec succès", Toast.LENGTH_SHORT).show()
