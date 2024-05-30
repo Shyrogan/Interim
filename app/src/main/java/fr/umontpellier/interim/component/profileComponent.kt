@@ -5,8 +5,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -134,12 +134,12 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
 
 @Composable
 fun EditableProfileField(label: String, value: String, onValueChange: (String) -> Unit) {
-    TextField(
+    OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
+        singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.height(8.dp))
-
 }

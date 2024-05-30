@@ -2,9 +2,9 @@ package fr.umontpellier.interim.screen.signup
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -75,41 +75,46 @@ fun SignUpCandidate() {
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TextField(
+            OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
                 label = { Text("Nom de famille") },
+                singleLine = true,
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(12.dp))
-            TextField(
+            OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
                 label = { Text("Prénom") },
+                singleLine = true,
                 modifier = Modifier.weight(1f)
             )
 
         }
         Spacer(modifier = Modifier.height(12.dp))
 
-        TextField(
+        OutlinedTextField(
             value = nationality,
             onValueChange = { nationality = it },
             label = { Text("Nationalité") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Téléphone") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = additionalInfo,
             onValueChange = { additionalInfo = it },
             label = { Text("Informations supplémentaires") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(36.dp))

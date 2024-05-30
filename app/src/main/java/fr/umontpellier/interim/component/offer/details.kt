@@ -61,7 +61,7 @@ fun OfferDetailsComponent(offer: Offer) {
             style = MaterialTheme.typography.body1
         )
         Text(
-            "Rémunération: ${offer.remuneration}",
+            "Rémunération: ${offer.remuneration}€",
             style = MaterialTheme.typography.body1
         )
         Text(

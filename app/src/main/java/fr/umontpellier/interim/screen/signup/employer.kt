@@ -4,11 +4,11 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -92,47 +92,53 @@ fun SignUpEmployer() {
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TextField(
+            OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
                 label = { Text("Nom de famille") },
+                singleLine = true,
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(12.dp))
-            TextField(
+            OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
                 label = { Text("Prénom") },
+                singleLine = true,
                 modifier = Modifier.weight(1f)
             )
 
         }
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = companyName,
             onValueChange = { companyName = it },
             label = { Text("Nom de l'entreprise") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = companyPosition,
             onValueChange = { companyPosition = it },
             label = { Text("Poste dans l'entreprise") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Numéro de téléphone") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        TextField(
+        OutlinedTextField(
             value = address,
             onValueChange = { address = it },
             label = { Text("Adresse") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -143,10 +149,11 @@ fun SignUpEmployer() {
             }
         }
         Row {
-            TextField(
+            OutlinedTextField(
                 value = newLink,
                 onValueChange = { newLink = it },
                 label = { Text("Ajouter un lien public") },
+                singleLine = true,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()

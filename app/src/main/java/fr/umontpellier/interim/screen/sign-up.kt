@@ -67,12 +67,14 @@ fun SignUp() {
             value = email,
             onValueChange = { email = it },
             label = { Text("Adresse e-mail") },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Mot de passe") },
+            singleLine = true,
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 val image = if (passwordVisible) Icons.Filled.Visibility

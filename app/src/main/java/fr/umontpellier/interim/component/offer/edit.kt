@@ -60,7 +60,11 @@ fun EditOfferComponent(offer: Offer, onSave: (Offer) -> Unit) {
         )
     }
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
+    ) {
 
         UpdateImagePicker(logoUrl) { newLogoUrl -> logoUrl = newLogoUrl }
         Spacer(modifier = Modifier.height(16.dp))
@@ -68,17 +72,21 @@ fun EditOfferComponent(offer: Offer, onSave: (Offer) -> Unit) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nom de l'offre") }
+            label = { Text("Nom de l'offre") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
+        OutlinedTextField(
             value = jobTitle,
             onValueChange = { jobTitle = it },
-            label = { Text("Métier ciblé") }
+            label = { Text("Métier ciblé") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -92,17 +100,21 @@ fun EditOfferComponent(offer: Offer, onSave: (Offer) -> Unit) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
+        OutlinedTextField(
             value = remuneration,
             onValueChange = { remuneration = it },
-            label = { Text("Rémunération") }
+            label = { Text("Rémunération") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
+        OutlinedTextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Description") }
+            label = { Text("Description") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -138,10 +150,12 @@ fun ProfileListEditor(
                 }
             }
         }
-        TextField(
+        OutlinedTextField(
             value = newProfile,
             onValueChange = onProfileChanged,
-            label = { Text("Ajouter un profil") }
+            label = { Text("Ajouter un profil") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         Button(onClick = onProfileAdded) {
             Text("Ajouter")

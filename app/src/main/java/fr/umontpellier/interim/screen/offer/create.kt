@@ -6,9 +6,14 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -89,7 +94,8 @@ fun CreateOffer() {
     }
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
             .verticalScroll(scrollState)
     ) {
         ImagePicker { uri ->
@@ -116,28 +122,33 @@ fun CreateOffer() {
             )
         }
 
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nom de l'offre") }
+            label = { Text("Nom de l'offre") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = jobTitle,
             onValueChange = { jobTitle = it },
-            label = { Text("Métier ciblé") }
+            label = { Text("Métier ciblé") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        androidx.compose.material3.Text("Profils recherchés")
+        Text("Profils recherchés")
         Column(modifier = Modifier.padding(4.dp)) {
             profilesNeeded.forEach { profile ->
-                androidx.compose.material3.Text(profile, modifier = Modifier.padding(4.dp))
+                Text(profile, modifier = Modifier.padding(4.dp))
             }
         }
         Row {
-            androidx.compose.material3.TextField(
+            OutlinedTextField(
                 value = newProfile,
                 onValueChange = { newProfile = it },
-                label = { androidx.compose.material3.Text("Ajouter profile") },
+                label = { Text("Ajouter profile") },
+                singleLine = true,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
@@ -146,22 +157,26 @@ fun CreateOffer() {
                 Icon(Icons.Filled.Add, contentDescription = "Ajouter un profile")
             }
         }
-        TextField(
+        OutlinedTextField(
             value = remuneration,
             onValueChange = { remuneration = it },
-            label = { Text("Rémunération") }
+            label = { Text("Rémunération") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Description") }
+            label = { Text("Description") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
         )
         DatePicker("Date de début", start) { newStart -> start = newStart }
         DatePicker("Date de fin", end) { newEnd -> end = newEnd }
 
         Spacer(modifier = Modifier.height(48.dp))
-        androidx.compose.material3.TextButton(onClick = onSubmit) {
-            androidx.compose.material3.Text("Creer l'offre")
+        TextButton(onClick = onSubmit) {
+            Text("Creer l'offre")
         }
     }
 }

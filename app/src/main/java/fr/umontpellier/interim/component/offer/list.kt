@@ -20,7 +20,7 @@ fun OfferList(offers: List<Offer.WithUser>, onOfferClick: (String) -> Unit) {
     offers.forEach { (offer, user) ->
         Box(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 8.dp, vertical = 4.dp)
                 .border(2.dp, Color.Gray)
                 .background(Color.LightGray.copy(alpha = 0.4F))
                 .clickable { offer.id?.let { onOfferClick(it) } }

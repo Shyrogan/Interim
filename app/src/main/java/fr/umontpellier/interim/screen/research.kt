@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -73,7 +73,13 @@ fun Research() {
         onResearchChange("")
     }
     Column(modifier = Modifier.padding(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        TextField(value, onValueChange = onResearchChange, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(
+            value,
+            onValueChange = onResearchChange,
+            placeholder = { Text(text = "Indiquez le nom de l'offre...") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
         Text(
             text = "Nos offres pour votre recherche:",
             fontWeight = FontWeight.Bold,
@@ -82,5 +88,6 @@ fun Research() {
         )
         OfferList(offers) { offerId ->
             navController.navigate("offer/$offerId")
-        }    }
+        }
+    }
 }
