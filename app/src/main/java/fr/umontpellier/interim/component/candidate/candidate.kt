@@ -1,6 +1,7 @@
 package fr.umontpellier.interim.component.candidate
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,6 +35,10 @@ fun Candidate(offerId: String) {
     var documentUrl by remember { mutableStateOf("") }
     var documentName by remember { mutableStateOf("Joindre une lettre de motivation") }
 
+    var cvName by remember { mutableStateOf("Joindre mon cv") }
+    var cvRef by remember { mutableStateOf("") }
+    var cvUploaded by remember { mutableStateOf(false) }
+
     val documentLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri: Uri? ->
@@ -64,27 +69,49 @@ fun Candidate(offerId: String) {
             val userRef = Firebase.firestore.collection("user").document(currentUser.uid)
             val offerRef = Firebase.firestore.collection("offer").document(offerId)
 
-            Firebase.firestore
-                .collection("application")
-                .add(
-                    Application(
-                        null,
-                        offerRef,
-                        userRef,
-                        documentUrl,
+            fun submitApplication() {
+                Firebase.firestore
+                    .collection("application")
+                    .add(
+                        Application(
+                            null,
+                            offerRef,
+                            userRef,
+                            cv = cvRef,
+                            motivation_letter = documentUrl,
+                        )
                     )
-                )
-                .addOnSuccessListener {
-                    navController.navigate(Routes.Search.route)
-                    Toast.makeText(context, "Candidature envoyée", Toast.LENGTH_SHORT).show()
+                    .addOnSuccessListener {
+                        navController.navigate(Routes.Search.route)
+                        Toast.makeText(context, "Candidature envoyée", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            context,
+                            "Erreur lors de l'envoi de la candidature: ${e.localizedMessage}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+            }
+
+            if (cvUploaded) {
+                val userDocRef = Firebase.firestore.collection("user").document(currentUser.uid)
+                userDocRef.get().addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val cvUrl = document.getString("cv")
+                        if (cvUrl != null && cvUrl.isNotEmpty()) {
+                            cvRef = cvUrl
+                        }
+                    }
+                    submitApplication()
+                }.addOnFailureListener {
+                    navController.navigate(Routes.Account.route)
+                    Toast.makeText(context, "Verifiez d'abord votre CV", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(
-                        context,
-                        "Erreur lors de l'envoi de la candidature: ${e.localizedMessage}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+
+            } else {
+                submitApplication()
+            }
         }
     }
 
@@ -101,11 +128,14 @@ fun Candidate(offerId: String) {
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable(onClick = { /*todo recuperer le fichier depuis l'espace user */ })
+            modifier = Modifier.clickable(onClick = {
+                cvName = "Mon_CV.pdf"
+                cvUploaded = true
+            })
         ) {
             Icon(Icons.Outlined.Description, contentDescription = "Joindre mon CV")
             Spacer(modifier = Modifier.width(12.dp))
-            Text("Joindre un CV")
+            Text(cvName)
         }
 
         Row(

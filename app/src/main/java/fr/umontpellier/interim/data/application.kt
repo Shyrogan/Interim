@@ -12,7 +12,9 @@ data class Application @JvmOverloads constructor(
         .document(""),
     val candidate: DocumentReference = Firebase.firestore.collection("user")
         .document(""),
+    val cv: String? = "",
     val motivation_letter: String? = ""
+
 )
 
 
