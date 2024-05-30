@@ -4,14 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
-import androidx.compose.material.Card
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
 
@@ -19,12 +22,8 @@ import fr.umontpellier.interim.data.User
 @Composable
 fun EmployerProfileScreen(user: User?, onSave: (User) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Card(modifier = Modifier.weight(2f)) {
-            EditEmployeeComponent(user, onSave)
-        }
-        Card(modifier = Modifier.weight(1f)) {
-            ManageOffer()
-        }
+        EditEmployeeComponent(user, onSave)
+        ManageOffer()
     }
 }
 
@@ -76,6 +75,13 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
             )
         }) {
             Text("Sauvegarder")
+        }
+
+        Button(
+            onClick = { Firebase.auth.signOut() },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+        ) {
+            androidx.compose.material3.Text(text = "Se déconnecter")
         }
     }
 

@@ -26,7 +26,7 @@ import fr.umontpellier.interim.Routes
 fun SignUp() {
     val context = LocalContext.current
     val navController = LocalNavHost.current
-    if (Firebase.auth.currentUser == null) {
+    if (Firebase.auth.currentUser != null) {
         navController.navigate(Routes.Home.route)
         return
     }

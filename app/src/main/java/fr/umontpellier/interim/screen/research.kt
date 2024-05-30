@@ -1,10 +1,7 @@
 package fr.umontpellier.interim.screen
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -72,7 +69,7 @@ fun Research() {
     LaunchedEffect(dummy) {
         onResearchChange("")
     }
-    Column(modifier = Modifier.padding(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         OutlinedTextField(
             value,
             onValueChange = onResearchChange,
@@ -80,6 +77,7 @@ fun Research() {
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Nos offres pour votre recherche:",
             fontWeight = FontWeight.Bold,
