@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import fr.umontpellier.interim.LocalNavHost
+import fr.umontpellier.interim.Routes
 import fr.umontpellier.interim.component.candidate.ShowCV
 import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
@@ -89,6 +91,7 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
         ) {
             androidx.compose.material3.Text(text = "Se déconnecter")
+            LocalNavHost.current.navigate(Routes.Home.route)
         }
     }
 
@@ -186,6 +189,14 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
             )
         }) {
             Text("Sauvegarder")
+        }
+
+        Button(
+            onClick = { Firebase.auth.signOut() },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+        ) {
+            androidx.compose.material3.Text(text = "Se déconnecter")
+            LocalNavHost.current.navigate(Routes.Home.route)
         }
     }
 
