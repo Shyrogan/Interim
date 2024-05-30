@@ -63,7 +63,8 @@ fun SignUpEmployer() {
                     companyName,
                     companyPosition,
                     address,
-                    publicLinks
+                    publicLinks,
+                    ""
                 )
             )
             .addOnSuccessListener {

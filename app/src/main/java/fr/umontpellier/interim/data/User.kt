@@ -12,7 +12,8 @@ data class User @JvmOverloads constructor(
     val company: String = "",
     val company_position: String = "",
     val address: String = "",
-    val files: List<String> = mutableListOf()
+    val files: List<String> = mutableListOf(),
+    val cv: String = ""
 ) {
 
     val isCandidate: Boolean
@@ -22,3 +23,4 @@ data class User @JvmOverloads constructor(
         get() = !isCandidate
 
 }
+

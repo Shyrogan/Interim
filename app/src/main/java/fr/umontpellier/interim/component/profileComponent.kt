@@ -1,5 +1,10 @@
 package fr.umontpellier.interim.component
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,11 +15,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import fr.umontpellier.interim.component.candidate.ShowCV
 import fr.umontpellier.interim.component.offer.ManageOffer
 import fr.umontpellier.interim.data.User
 
@@ -89,6 +96,7 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
 
 @Composable
 fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
+    var context = LocalContext.current
     if (user == null) {
         Text("Aucune donnée disponible")
         return
@@ -98,6 +106,28 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
     var nationality by remember { mutableStateOf(user.nationality) }
     var phone by remember { mutableStateOf(user.phone) }
     var address by remember { mutableStateOf(user.address) }
+    var cvUrl by remember { mutableStateOf(user.cv) }
+
+    val cvLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri: Uri? ->
+            uri?.let {
+                uploadFileToFirebaseStorage(it,
+                    onSuccess = { url ->
+                        cvUrl = url
+                        Toast.makeText(context, "CV téléchargé avec succès: $url", Toast.LENGTH_LONG).show()
+                    },
+                    onFailure = { exception ->
+                        Toast.makeText(
+                            context,
+                            "Erreur lors du téléchargement: ${exception.localizedMessage}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                )
+            }
+        }
+    )
 
 
     Column(
@@ -120,6 +150,29 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
         EditableProfileField("Numéro de téléphone", phone) { phone = it }
         EditableProfileField("Adresse", address) { address = it }
 
+
+        if (cvUrl.isNotEmpty()) {
+            ShowCV(
+                cvName = "Mon CV.pdf",
+                onUpdate = { cvLauncher.launch("application/pdf") },
+                onDelete = {
+                    cvUrl = ""
+                },
+                onView = {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(cvUrl)))
+                }
+            )
+        } else {
+            Button(
+                onClick = { cvLauncher.launch("application/pdf") },
+                modifier = Modifier.padding(top = 10.dp)
+            ) {
+                Text("Ajouter CV")
+            }
+        }
+
+
+
         Button(onClick = {
             onSave(
                 User(
@@ -128,6 +181,7 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
                     nationality = nationality,
                     phone = phone,
                     address = address,
+                    cv = cvUrl
                 )
             )
         }) {
