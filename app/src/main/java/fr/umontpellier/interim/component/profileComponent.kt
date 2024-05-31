@@ -106,32 +106,37 @@ fun EditEmployeeComponent(user: User?, onSave: (User) -> Unit) {
         EditableProfileField("Numéro de téléphone", phone) { phone = it }
         EditableProfileField("Adresse", address) { address = it }
 
-        Button(onClick = {
-            onSave(
-                User(
-                    first_name = firstName,
-                    last_name = lastName,
-                    company = companyName,
-                    company_position = companyPosition,
-                    phone = phone,
-                    address = address,
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = {
+                onSave(
+                    User(
+                        first_name = firstName,
+                        last_name = lastName,
+                        company = companyName,
+                        company_position = companyPosition,
+                        phone = phone,
+                        address = address,
+                    )
                 )
-            )
-        }) {
-            Text("Sauvegarder")
+                navHost.navigate(Routes.Account.route)
+
+            }) {
+                Text("Sauvegarder")
+            }
+
+            Button(
+                onClick = {
+                    Firebase.auth.signOut()
+                    navHost.navigate(Routes.Home.route)
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+            ) {
+                androidx.compose.material3.Text(text = "Se déconnecter")
+            }
         }
 
-        Button(
-            onClick = {
-                Firebase.auth.signOut()
-                navHost.navigate(Routes.Home.route)
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
-        ) {
-            androidx.compose.material3.Text(text = "Se déconnecter")
-        }
+
     }
-
 }
 
 @Composable
@@ -142,6 +147,7 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
         Text("Aucune donnée disponible")
         return
     }
+    var email = user.email
     var lastName by remember { mutableStateOf(user.last_name) }
     var firstName by remember { mutableStateOf(user.first_name) }
     var nationality by remember { mutableStateOf(user.nationality) }
@@ -212,30 +218,35 @@ fun EditCandidateComponent(user: User?, onSave: (User) -> Unit) {
             }
         }
 
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
 
 
-        Button(onClick = {
-            onSave(
-                User(
-                    first_name = firstName,
-                    last_name = lastName,
-                    nationality = nationality,
-                    phone = phone,
-                    address = address,
-                    cv = cvUrl
+            Button(onClick = {
+                onSave(
+                    User(
+                        first_name = firstName,
+                        last_name = lastName,
+                        email = email,
+                        nationality = nationality,
+                        phone = phone,
+                        address = address,
+                        cv = cvUrl
+                    )
                 )
-            )
-        }) {
-            Text("Sauvegarder")
-        }
-        Button(
-            onClick = {
-                Firebase.auth.signOut()
-                navHost.navigate(Routes.Home.route)
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
-        ) {
-            androidx.compose.material3.Text(text = "Se déconnecter")
+                navHost.navigate(Routes.Account.route)
+
+            }) {
+                Text("Sauvegarder")
+            }
+            Button(
+                onClick = {
+                    Firebase.auth.signOut()
+                    navHost.navigate(Routes.Home.route)
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+            ) {
+                androidx.compose.material3.Text(text = "Se déconnecter")
+            }
         }
     }
 

@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -51,7 +48,21 @@ fun ManageApplications(offerId: String) {
             }
     }
 
-    LazyColumn {
+
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    )
+    {
+        item {
+            Text(
+                "Candidatures pour l'offre:",
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
         items(withUserList.size) { index ->
             val withUser = withUserList[index]
             ApplicationItem(
@@ -69,12 +80,18 @@ fun ManageApplications(offerId: String) {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(withUser.application.cv)))
                 },
                 onDownloadLetter = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(withUser.application.motivation_letter)))
+                    context.startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(withUser.application.motivation_letter)
+                        )
+                    )
                 }
             )
         }
     }
 }
+
 
 @Composable
 fun ApplicationItem(
@@ -85,11 +102,16 @@ fun ApplicationItem(
     onDownloadCV: () -> Unit,
     onDownloadLetter: () -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showContactDialog by remember { mutableStateOf(false) }
+    var showProfileDialog by remember { mutableStateOf(false) }
+
     var context = LocalContext.current
 
-    if (showDialog) {
-        ContactDialog(user = user, onDismiss = { showDialog = false }, context)
+    if (showContactDialog) {
+        ContactDialog(user = user, onDismiss = { showContactDialog = false }, context)
+    }
+    if (showProfileDialog) {
+        ProfileDialog(user = user, onDismiss = { showProfileDialog = false })
     }
 
     Card(
@@ -103,20 +125,26 @@ fun ApplicationItem(
             modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "${user.first_name} ${user.last_name}",
-                style = MaterialTheme.typography.subtitle1,
+            TextButton(
+                onClick = { showProfileDialog = true },
                 modifier = Modifier.weight(1f)
-            )
-            // Icons for download actions
-            IconButton(onClick = onDownloadCV) {
-                Icon(Icons.Filled.Description, contentDescription = "Télécharger CV")
+            ) {
+                Text(
+                    text = "${user.first_name} ${user.last_name}",
+                    style = MaterialTheme.typography.subtitle1
+                )
             }
-            IconButton(onClick = onDownloadLetter) {
-                Icon(Icons.Filled.AttachFile, contentDescription = "Télécharger Lettre de Motivation")
+            if (application.cv != null && application.cv.isNotEmpty()) {
+                IconButton(onClick = onDownloadCV) {
+                    Icon(Icons.Filled.Description, contentDescription = "Télécharger CV")
+                }
             }
-            // Contact icon that opens the dialog
-            IconButton(onClick = { showDialog = true }) {
+            if (application.motivation_letter != null && application.motivation_letter.isNotEmpty()) {
+                IconButton(onClick = onDownloadLetter) {
+                    Icon(Icons.Filled.AttachFile, contentDescription = "Télécharger Lettre de Motivation")
+                }
+            }
+            IconButton(onClick = { showContactDialog = true }) {
                 Icon(Icons.Filled.Email, contentDescription = "Contacter")
             }
             IconButton(onClick = onReject) {
@@ -179,3 +207,26 @@ fun ContactDialog(user: User, onDismiss: () -> Unit, context: Context) {
         }
     )
 }
+
+@Composable
+fun ProfileDialog(user: User, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Profil de l'utilisateur") },
+        text = {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(text = "Nom: ${user.last_name}", style = MaterialTheme.typography.body1)
+                Text(text = "Prénom: ${user.first_name}", style = MaterialTheme.typography.body1)
+                Text(text = "Nationalité: ${user.nationality}", style = MaterialTheme.typography.body1)
+                Text(text = "Adresse: ${user.address}", style = MaterialTheme.typography.body1)
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Fermer")
+            }
+        }
+    )
+}
+
+

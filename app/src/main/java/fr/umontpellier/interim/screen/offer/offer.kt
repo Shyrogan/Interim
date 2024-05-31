@@ -45,7 +45,7 @@ fun OfferPage(offerId: String) {
         }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Card(modifier = Modifier.weight(2f)) {
+        Card(modifier = Modifier.weight(3f)) {
             offerData?.let { OfferDetailsComponent(it) }
         }
         if (user == null) {

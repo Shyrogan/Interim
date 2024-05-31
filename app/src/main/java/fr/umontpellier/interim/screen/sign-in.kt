@@ -31,7 +31,7 @@ fun SignIn() {
     var password by remember { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     val navHost = LocalNavHost.current
-    
+
     if (Firebase.auth.currentUser != null) {
         navHost.navigate(Routes.Home.route)
         return
@@ -47,6 +47,7 @@ fun SignIn() {
             }
             .addOnSuccessListener {
                 Toast.makeText(context, "Vous voilà connecté !", Toast.LENGTH_SHORT).show()
+                navHost.navigate(Routes.Home.route)
             }
     }
 
